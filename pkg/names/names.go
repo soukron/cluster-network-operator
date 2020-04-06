@@ -57,6 +57,10 @@ const ADDL_TRUST_BUNDLE_CONFIGMAP_NS = "openshift-config"
 // the PEM encoded trust bundle.
 const TRUSTED_CA_BUNDLE_CONFIGMAP_KEY = "ca-bundle.crt"
 
+// TRUSTED_CA_BUNDLE_CONFIGMAP_KEY is the name of the data key containing
+// the PKCS#12 encoded trust bundle.
+const TRUSTED_CA_BUNDLE_PKCS12_CONFIGMAP_KEY = "ca-bundle.p12"
+
 // TRUSTED_CA_BUNDLE_CONFIGMAP is the name of the ConfigMap
 // containing the combined user/system trust bundle.
 const TRUSTED_CA_BUNDLE_CONFIGMAP = "trusted-ca-bundle"
@@ -69,6 +73,10 @@ const TRUSTED_CA_BUNDLE_CONFIGMAP_NS = "openshift-config-managed"
 // TRUSTED_CA_BUNDLE_CONFIGMAP_LABEL is the name of the label that
 // determines whether or not to inject the combined ca certificate
 const TRUSTED_CA_BUNDLE_CONFIGMAP_LABEL = "config.openshift.io/inject-trusted-cabundle"
+
+// TRUSTED_CA_BUNDLE_PKCS12_CONFIGMAP_LABEL is the name of the label that
+// determines whether or not to inject the combined ca certificate in PKCS#12 format
+const TRUSTED_CA_BUNDLE_PKCS12_CONFIGMAP_LABEL = "config.openshift.io/inject-trusted-cabundle-pkcs12"
 
 // SYSTEM_TRUST_BUNDLE is the full path to the file containing
 // the system trust bundle.

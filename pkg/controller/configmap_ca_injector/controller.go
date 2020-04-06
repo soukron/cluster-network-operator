@@ -90,6 +90,8 @@ type ReconcileConfigMapInjector struct {
 // config.openshift.io/inject-trusted-cabundle = true have the certificate information stored in trusted-ca-bundle's ca-bundle.crt entry.
 // 2. a configmap in any namespace with the label config.openshift.io/inject-trusted-cabundle = true and will insure that it contains the ca-bundle.crt
 // entry in the configmap named trusted-ca-bundle in namespace openshift-config-managed.
+// Additionally for type 2 configmaps, other keys can be created depending on the labels of the configmap with the certificates in
+// different formats like PKCS#12.
 func (r *ReconcileConfigMapInjector) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	log.Printf("Reconciling configmap from  %s/%s\n", request.Namespace, request.Name)
 
@@ -174,6 +176,12 @@ func (r *ReconcileConfigMapInjector) Reconcile(request reconcile.Request) (recon
 			} else {
 				configMapToUpdate.Data[names.TRUSTED_CA_BUNDLE_CONFIGMAP_KEY] = string(trustedCAbundleData)
 			}
+
+                        // TODO: check for other labels here to inject the certificates also in different formats.
+                        if (configMapToUpdate.getLabels()[names.TRUSTED_CA_BUNDLE_PKCS12_CONFIGMAP_LABEL] == "true") {
+				configMapToUpdate.Data[names.TRUSTED_CA_BUNDLE_PKCS12_CONFIGMAP_KEY] = string(trustedCAbundleData)
+                        }
+
 			if equality.Semantic.DeepEqual(configMapToUpdate, retrievedConfigMap) {
 				// Nothing to update the new and old configmap object would be the same.
 				return nil
